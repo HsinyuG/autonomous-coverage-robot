@@ -1,0 +1,22 @@
+obstacle_range: 3.0
+raytrace_range: 3.0
+# footprint: [[x0, y0], [x1, y1], ... [xn, yn]]
+# footprint: [[0.3, 0.12], [-0.1, 0.12], [-0.1, -0.12], [0.3, -0.12]]
+
+#robot_radius: ir_of_robot
+robot_radius: 0.1
+inflation_radius: 0.2
+transform_tolerance: 10.0
+
+# observation_sources: laser_scan_sensor point_cloud_sensor
+
+# laser_scan_sensor: {sensor_frame: frame_name, data_type: LaserScan, topic: topic_name, marking: true, clearing: true}
+
+# point_cloud_sensor: {sensor_frame: frame_name, data_type: PointCloud, topic: topic_name, marking: true, clearing: true}
+
+observation_sources: point_cloud_lidar point_cloud_camera
+# observation_sources: point_cloud_camera
+point_cloud_lidar: {data_type: PointCloud2, topic: scan_filtered_pc2, sensor_frame: laser, marking: true, clearing: true}
+point_cloud_camera: {data_type: PointCloud2, topic: yolo_tracked_pc2, sensor_frame: base_link, marking: true, clearing: false}
+obstacle_range: 3
+raytrace_range: 3

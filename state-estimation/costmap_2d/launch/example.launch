@@ -1,0 +1,36 @@
+<launch>
+  <!-- 
+  NOTE: You'll need to bring up something that publishes sensor data (see
+  rosstage), something that publishes a map (see map_server), and something to
+  visualize a costmap (see nav_view), to see things work.
+
+  Also, on a real robot, you'd want to set the "use_sim_time" parameter to false, or just not set it.
+  -->
+  <param name="/use_sim_time" value="true"/>
+
+  <include file="$(find amcl)/launch/amcl_mirte.launch" />
+
+  <!-- Publishes the voxel grid to rviz for display -->
+  <!-- <node pkg="costmap_2d" type="costmap_2d_markers" name="voxel_visualizer">
+    <remap from="voxel_grid" to="costmap/voxel_grid"/>
+  </node> -->
+
+  <include file="$(find lidar_preprocess)/launch/lidar_preprocess.launch" />
+
+  <!-- Run the costmap node -->
+  <node name="costmap_node" pkg="costmap_2d" type="costmap_2d_node" output="screen" >
+    <rosparam file="$(find costmap_2d)/launch/example_params.yaml" command="load" ns="costmap"/>
+
+    <!-- <remap from="base_scan" to="scan"/> -->
+  </node>
+
+  <node name="standalone_converter" pkg="costmap_converter" type="standalone_converter" output="screen">
+    <param name="cluster_max_distance" value="0.2"/> 
+    <param name="occupied_min_value" value="100"/>
+  </node>
+
+  <node name="playbag" pkg="rosbag" type="play" args="--clock /home/xaviergg/Desktop/RO_MDP/rosbag/11-06-06_14.bag" />
+
+
+
+</launch>

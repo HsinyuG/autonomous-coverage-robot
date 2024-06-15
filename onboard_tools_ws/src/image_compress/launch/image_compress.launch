@@ -1,0 +1,11 @@
+<launch>
+    
+    <param name="/use_sim_time" value="true" />
+    
+    <node pkg="image_compress" type="compress_convert.py" name="image_compress_node" output="screen">
+        <!-- <param name=" " value=" "/> -->
+        <!-- <remap from=" " to=" "/> -->
+    </node>
+
+    <node pkg="image_compress" type="clock_server.py" name="clock_server_node" output="screen"/>
+</launch>

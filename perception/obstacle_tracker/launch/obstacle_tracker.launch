@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+    <!-- <param name="use_sim_time" value="true" /> -->
+
+    <!-- Load the map -->
+    <!-- <arg name="map_file" default="$(find amcl)/map/barn_zoo.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/> -->
+
+    <!-- Run AMCL -->
+    <!-- <include file="$(find amcl)/launch/amcl_mirte.launch"> -->
+    <!-- </include> -->
+
+    <!-- Run YOLOV8 -->
+    <!-- <include file="$(find yolov8_ros)/launch/yolo_v8.launch">
+    </include> -->
+
+    <!-- this node -->
+    <node pkg="obstacle_tracker" type="obstacle_tracker.py" name="obstacle_tracker_node" output="screen" />
+
+    <!-- <node name="playbag" pkg="rosbag" type="play" args="-clock /home/xaviergg/Desktop/RO_MDP/rosbag/8-acml-2024-05-21-16-55-08.bag" /> -->
+    <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find amcl)/launch/rivz.rviz"/> -->
+
+</launch>

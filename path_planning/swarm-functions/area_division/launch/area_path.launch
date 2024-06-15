@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="area_division" type="area_division_node" name="area_division_node" output="screen" ns="area_division">
+        <rosparam file="$(find area_division)/param/area_division.yaml" command="load" />
+    </node>
+
+    <arg name="id" default="1" />
+    <arg name="output" default="log" />
+
+        <!-- Swarm coverage path generation -->
+    <node pkg="coverage_path" type="coverage_path" name="coverage_path_$(arg id)" output="screen" required="true" >
+        <rosparam file="$(find coverage_path)/param/coverage_path.yaml" command="load" />
+        <param name="/rosconsole/level" value="debug"/>
+    </node>
+
+    
+    <arg name="map_file" default="$(find amcl)/map/30cm_res_barn_2.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+        <remap from="map" to="map_server" />
+    </node>
+</launch>

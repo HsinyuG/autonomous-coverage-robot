@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<launch>
+    <param name="/use_sim_time" value="false" />
+
+    <!-- localization -->
+    <include file="$(find amcl)/launch/amcl_mirte.launch">
+    </include>
+
+    <!-- yolo detection -->
+    <include file="$(find yolov8_ros)/launch/yolo_v8.launch">
+    </include>
+
+    <!-- obstacle tracking -->
+    <include file="$(find obstacle_tracker)/launch/obstacle_tracker.launch">
+    </include>
+
+    <!-- filter out scaned points of robot body and convert to pc2 -->
+    <include file="$(find lidar_preprocess)/launch/lidar_preprocess.launch" />
+
+    <!-- local costmap -->
+    <node name="costmap_node" pkg="costmap_2d" type="costmap_2d_node" output="screen" >
+        <rosparam file="$(find costmap_2d)/launch/example_params.yaml" command="load" ns="costmap"/>
+    </node>
+
+    <node name="standalone_converter" pkg="costmap_converter" type="standalone_converter" output="screen">
+        <param name="cluster_max_distance" value="0.2"/> 
+        <param name="occupied_min_value" value="100"/>
+    </node>
+
+</launch>

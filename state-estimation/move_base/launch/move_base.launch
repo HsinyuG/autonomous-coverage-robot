@@ -1,0 +1,22 @@
+<launch>
+
+   <!-- <master auto="start"/> -->
+ <!-- Run the map server --> 
+    <!-- <node name="map_server" pkg="map_server" type="map_server" args="$(find amcl)/map/gourd_barn.pgm 0.05"/> -->
+   <param name="/use_sim_time" value="false"/>
+ <!--- Run AMCL --> 
+   <!-- <include file="$(find amcl)/launch/amcl_mirte.launch" /> -->
+
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+      <rosparam file="$(find move_base)/launch/costmap_common_params.yaml" command="load" ns="global_costmap" /> 
+      <rosparam file="$(find move_base)/launch/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      <rosparam file="$(find move_base)/launch/local_costmap_params.yaml" command="load" />
+      <rosparam file="$(find move_base)/launch/global_costmap_params.yaml" command="load" /> 
+      <rosparam file="$(find move_base)/launch/base_local_planner_params.yaml" command="load" />
+
+      <remap from="cmd_vel" to="mobile_base_controller/cmd_vel"/>
+    </node>
+
+ <!-- <node name="path_subscriber_node" pkg="move_base" type="coverage_path_convert.py" output="screen" /> -->
+
+</launch> 
